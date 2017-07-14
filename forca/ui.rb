@@ -4,12 +4,19 @@ def bem_vindo
   nome = gets.strip
   puts "\n\n\n\n"
   puts"Vamos começar o jogo para você, #{nome}"
+  nome
 end
 
 def escolher_palavra_secreta
   puts "Escolhendo uma palavra secreta..."
-  dicionario = (File.read("dic.txt")).split "\n"
-  palavra_secreta = dicionario[rand(9)]
+  arquivo = File.new("dic.txt")
+  quantidade_palavra = arquivo.gets.strip.to_i
+  numero_escolhido = rand(quantidade_palavra)
+  for linha in 1..(numero_escolhido-1)
+    arquivo.gets.strip
+  end
+  palavra_secreta = arquivo.gets.strip.downcase
+  arquivo.close()
   puts "Palavra secreta com #{palavra_secreta.size} letras ... boa sorte!"
   palavra_secreta
 end
@@ -46,11 +53,28 @@ def chutar(erros,chutes,mascara)
   puts "Você já errou #{erros}"
   puts "Esses são seus chutes #{chutes}"
   puts "Entre com uma letra ou uma palavra"
-  chute = gets.strip
+  chute = gets.strip.downcase
   puts "Será que você acertou?"
   chute
 end
 
 def chute_efetuado(chute)
   puts "Você já chutou #{chute}"
+end
+
+def avisa_pontos(nome,pontos_totais)
+  puts "\n"
+  puts "Você #{nome} tem um total de #{pontos_totais}"
+  puts "\n"
+end
+
+def le_rank
+  conteudo = File.read("rank.txt")
+  conteudo.split("\n")
+end
+
+def avisa_campeao_atual(dados)
+  puts "\n\n\n"
+  puts "O campeão atual é o #{dados[0]} com #{dados[1]} pontos"
+  puts "\n\n\n"
 end
